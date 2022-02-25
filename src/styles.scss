@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@use '~@angular/material' as mat;
+@include mat.core();
+
+//@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto+Slab:wght@100;400;700&display=swap');
+
+@import '~@angular/material/theming';
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	min-height: 100vh;
+	background-color: #e5e5e5;
+	font-family: 'Roboto', sans-serif;
+}
+
+
+
+  
