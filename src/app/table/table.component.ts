@@ -28,7 +28,7 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['name', 'lang', 'date', 'bool', 'href'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
-  getRepo() {  
+  getRepo() {
     this.isLoading = true;
     this.api.repositories().subscribe((e: any) => {
       this.dataSource.data = e;
@@ -38,8 +38,8 @@ export class TableComponent implements OnInit {
     });
   }
 
-  onClickRow() {
-    this.dialog.open(RowDialogComponent, { data: this.dataSource });
+  onClickRow(name: string) {
+    this.dialog.open(RowDialogComponent, { data: name });
   }
 
   ngOnInit(): void {

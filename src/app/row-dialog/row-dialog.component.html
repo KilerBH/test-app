@@ -15,12 +15,12 @@
             <th mat-header-cell *matHeaderCellDef>
               Header
             </th>
-            <td mat-cell *matCellDef="let element" >{{ element.issues_url}}</td>
+            <td mat-cell *matCellDef="let element" >{{ element.title}}</td>
           </ng-container>
     
           <ng-container matColumnDef="text">
             <th mat-header-cell *matHeaderCellDef>Text</th>
-            <td mat-cell *matCellDef="let element">{{ element.issue_comment_url }}
+            <td mat-cell *matCellDef="let element">{{ element.body }}
             </td>
           </ng-container>
     

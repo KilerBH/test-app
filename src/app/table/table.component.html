@@ -47,7 +47,7 @@
         mat-row
         *matRowDef="let row; columns: displayedColumns"
         class="mat-row"
-        (dblclick)="onClickRow()"
+        (dblclick)="onClickRow(row.name)"
       ></tr>
     </table>
     <mat-paginator
