@@ -9,6 +9,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { TableComponent } from './table/table.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     [ FlexLayoutModule ],
     [ FormsModule, ReactiveFormsModule ],  
     HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,7 +1,7 @@
 form {
   height: auto;
 }
-table {
+ mat-card {
   width: 80%;
   margin-left: 10%;
   margin-right: 10%;
@@ -16,6 +16,14 @@ table {
     background: rgb(70, 97, 216);
     color: whitesmoke;
   }
+}
+
+table{
+  width: 100%; 
+}
+
+th{
+  width: 20%;
 }
 
 .mat-spinner {
