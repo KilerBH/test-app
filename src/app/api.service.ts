@@ -9,13 +9,13 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  repositories(): any {
-    return this.http.get(this.url, {});
+  repositories(per_page: number): any {
+    return this.http.get(`${this.url}?per_page=${per_page}`, {});
   }
 
   issues(name: string): any {
     return this.http.get(
-      `https://api.github.com/repos/microsoft/${name}/issues`,
+      `https://api.github.com/repos/microsoft/${name}/issues?per_page=5`,
       {}
     );
   }
