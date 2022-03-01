@@ -15,18 +15,19 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor(private api: ApiService, private dialog: MatDialog) {}
 
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator!: MatPaginator;
 
   isLoading = false;
   displayedColumns: string[] = ['name', 'lang', 'date', 'bool', 'href'];
   dataSource = new MatTableDataSource<any>();
   pageSizeOptions: number[] = [10, 50, 100];
+  len = 10;
   pageSize = 10;
   page = 0;
 
   getRepo() {
     this.isLoading = true;
-    this.api.repositories(this.page, this.pageSize, 100).subscribe((e: any) => {
+    this.api.repositories(this.page, this.pageSize+this.len).subscribe((e: any) => {
       this.dataSource.data = e;
       this.isLoading = false;
     });
@@ -36,6 +37,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     console.log({ event });
     this.pageSize = event.pageSize;
     this.page = event.pageIndex;
+    this.len = event.length
     this.getRepo();
   }
 
