@@ -1,66 +1,86 @@
 <mat-card>
-  <ng-template [ngIf]="isLoading" class="progress">
-    <mat-spinner diameter="40"></mat-spinner>
-  </ng-template>
-  <ng-template [ngIf]="!isLoading">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="name">
-          Name Repository
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
+  <mat-spinner class="progress" *ngIf="isLoading" diameter="40"></mat-spinner>
 
-      <ng-container matColumnDef="lang">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="language">
-          Language
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.language }}</td>
-      </ng-container>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header="name"
+        [disabled]="!!isLoading"
+      >
+        Name Repository
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
 
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at">
-          Date of pushed
-        </th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.created_at | date: "d/M/yy, h:mm a" }}
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="lang">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header="language"
+        [disabled]="!!isLoading"
+      >
+        Language
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.language }}</td>
+    </ng-container>
 
-      <ng-container matColumnDef="bool">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="archived">
-          Archived
-        </th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.archived ? "yes" : "no" }}
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="date">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header="updated_at"
+        [disabled]="!!isLoading"
+      >
+        Date of pushed
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.updated_at | date: "d/M/yy, h:mm a" }}
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="href">
-        <th mat-header-cell *matHeaderCellDef>Home page</th>
-        <td mat-cell *matCellDef="let element">
-          <a href="{{ element.homepage }}" target="_blank">{{
-            element.homepage
-          }}</a>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="bool">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header="archived"
+        [disabled]="!!isLoading"
+      >
+        Archived
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.archived ? "yes" : "no" }}
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        class="mat-row"
-        (dblclick)="onClickRow(row.name)"
-      ></tr>
-    </table>
-    <mat-paginator
-      #paginator
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="pageChanged($event)"
-      aria-label="Select page"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-  </ng-template>
+    <ng-container matColumnDef="href">
+      <th mat-header-cell *matHeaderCellDef>Home page</th>
+      <td mat-cell *matCellDef="let element">
+        <a href="{{ element.homepage }}" target="_blank">{{
+          element.homepage
+        }}</a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="mat-row"
+      (dblclick)="!!isLoading ? '' : onClickRow(row.name)"
+    ></tr>
+  </table>
+  <mat-paginator
+    #paginator
+    [pageIndex]="page"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="pageChanged($event)"
+    [disabled]="!!isLoading"
+    aria-label="Select page"
+    showFirstLastButtons
+  >
+  </mat-paginator>
 </mat-card>
 <router-outlet></router-outlet>

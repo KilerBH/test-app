@@ -9,8 +9,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  repositories(per_page: number): any {
-    return this.http.get(`${this.url}?per_page=${per_page}`, {});
+  repositories(page: number, size: number, per_page: number): any {
+    return this.http.get(
+      `${this.url}?page=${page + 1}&size=${size}&per_page=${per_page}`,
+      {}
+    );
   }
 
   issues(name: string): any {

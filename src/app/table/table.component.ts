@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,39 +11,31 @@ import { RowDialogComponent } from '../row-dialog/row-dialog.component';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, AfterViewInit {
   constructor(private api: ApiService, private dialog: MatDialog) {}
 
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  isLoading: boolean = false;
+  isLoading = false;
   displayedColumns: string[] = ['name', 'lang', 'date', 'bool', 'href'];
   dataSource = new MatTableDataSource<any>();
   pageSizeOptions: number[] = [10, 50, 100];
   pageSize = 10;
+  page = 0;
 
   getRepo() {
     this.isLoading = true;
-    this.api.repositories(this.pageSize).subscribe((e: any) => {
+    this.api.repositories(this.page, this.pageSize, 100).subscribe((e: any) => {
       this.dataSource.data = e;
-      this.dataSource.sort = this.sort;
-      this.dataSource.sortingDataAccessor = (
-        data: any,
-        sortHeaderId: string
-      ): string => {
-        if (typeof data[sortHeaderId] === 'string') {
-          return data[sortHeaderId].toLocaleLowerCase();
-        }
-        return data[sortHeaderId];
-      };
+      this.isLoading = false;
     });
-    this.isLoading = false;
   }
 
   pageChanged(event: PageEvent) {
     console.log({ event });
     this.pageSize = event.pageSize;
+    this.page = event.pageIndex;
     this.getRepo();
   }
 
@@ -53,7 +45,17 @@ export class TableComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.paginator.length = this.pageSize;
+    this.paginator.pageIndex = this.page;
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (
+      data: any,
+      sortHeaderId: string
+    ): string => {
+      if (typeof data[sortHeaderId] === 'string') {
+        return data[sortHeaderId].toLocaleLowerCase();
+      }
+      return data[sortHeaderId];
+    };
   }
 
   ngOnInit(): void {
